@@ -114,7 +114,7 @@ class Thumbnail extends React.PureComponent {
     const { thumbContainer } = this;
     const { current } = thumbContainer;
     const pageNum = index + 1;
-    const viewerRotation = core.getRotation(pageNum);
+    // const viewerRotation = core.getRotation(pageNum);
 
     const id = core.loadThumbnailAsync(pageNum, thumb => {
       thumb.className = 'page-image';
@@ -123,20 +123,20 @@ class Thumbnail extends React.PureComponent {
       thumb.style.width = `${thumb.width * ratio}px`;
       thumb.style.height = `${thumb.height * ratio}px`;
 
-      if (Math.abs(viewerRotation)) {
-        const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
-        const cssTransformOrigin = 'top left';
-        thumb.style['transform'] = cssTransform;
-        thumb.style['transform-origin'] = cssTransformOrigin;
-        thumb.style['ms-transform'] = cssTransform;
-        thumb.style['ms-transform-origin'] = cssTransformOrigin;
-        thumb.style['-moz-transform'] = cssTransform;
-        thumb.style['-moz-transform-origin'] = cssTransformOrigin;
-        thumb.style['-webkit-transform-origin'] = cssTransformOrigin;
-        thumb.style['-webkit-transform'] = cssTransform;
-        thumb.style['-o-transform'] = cssTransform;
-        thumb.style['-o-transform-origin'] = cssTransformOrigin;
-      }
+      // if (Math.abs(viewerRotation)) {
+      //   const cssTransform = `rotate(${viewerRotation * 90}deg) translate(-50%,-50%)`;
+      //   const cssTransformOrigin = 'top left';
+      //   thumb.style['transform'] = cssTransform;
+      //   thumb.style['transform-origin'] = cssTransformOrigin;
+      //   thumb.style['ms-transform'] = cssTransform;
+      //   thumb.style['ms-transform-origin'] = cssTransformOrigin;
+      //   thumb.style['-moz-transform'] = cssTransform;
+      //   thumb.style['-moz-transform-origin'] = cssTransformOrigin;
+      //   thumb.style['-webkit-transform-origin'] = cssTransformOrigin;
+      //   thumb.style['-webkit-transform'] = cssTransform;
+      //   thumb.style['-o-transform'] = cssTransform;
+      //   thumb.style['-o-transform-origin'] = cssTransformOrigin;
+      // }
 
       const childElement = current?.querySelector('.page-image');
       if (childElement) {
