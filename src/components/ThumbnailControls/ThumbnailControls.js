@@ -48,7 +48,7 @@ const ThumbnailControls = ({ index }) => {
       confirmBtnText,
       onConfirm: () => {
         fireEvent('bsBeforePageRemoved', [index + 1]);
-        core.removePages([index + 1]).then(() => {
+        return core.removePages([index + 1]).then(() => {
           fireEvent('bsPageRemoved', index + 1);
         });
       },
