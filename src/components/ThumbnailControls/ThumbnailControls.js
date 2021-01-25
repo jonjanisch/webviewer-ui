@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import core from 'core';
 import selectors from 'selectors';
 import actions from 'actions';
+import fireEvent from 'helpers/fireEvent';
 
 import './ThumbnailControls.scss';
 
@@ -23,11 +24,17 @@ const ThumbnailControls = ({ index }) => {
   const dispatch = useDispatch();
 
   const rotateClockwise = () => {
-    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_90);
+    fireEvent('bsBeforePageRotated', index + 1);
+    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_90).then(() => {
+      fireEvent('bsPageRotated', index + 1);
+    });
   };
 
   const rotateCounterClockwise = () => {
-    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_270);
+    fireEvent('bsBeforePageRotated', index + 1);
+    core.rotatePages([index + 1], window.CoreControls.PageRotation.e_270).then(() => {
+      fireEvent('bsPageRotated', index + 1);
+    });
   };
 
   const handleDelete = () => {
@@ -39,7 +46,12 @@ const ThumbnailControls = ({ index }) => {
       message,
       title,
       confirmBtnText,
-      onConfirm: () => core.removePages([index + 1]),
+      onConfirm: () => {
+        fireEvent('bsBeforePageRemoved', [index + 1]);
+        return core.removePages([index + 1]).then(() => {
+          fireEvent('bsPageRemoved', index + 1);
+        });
+      },
     };
 
     if (core.getDocumentViewer().getPageCount() === 1) {
