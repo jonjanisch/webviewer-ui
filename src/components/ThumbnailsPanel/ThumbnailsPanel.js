@@ -21,6 +21,7 @@ import selectors from 'selectors';
 import actions from 'actions';
 
 import './ThumbnailsPanel.scss';
+import fireEvent from 'helpers/fireEvent';
 
 const dataTransferWebViewerFrameKey = 'dataTransferWebViewerFrame';
 
@@ -216,7 +217,10 @@ class ThumbnailsPanel extends React.PureComponent {
         const afterMovePageNumber =
           targetPageNumber - pageNumbersToMove.filter(p => p < targetPageNumber).length;
         this.afterMovePageNumber = afterMovePageNumber;
-        core.movePages(pageNumbersToMove, targetPageNumber);
+        fireEvent('bsBeforePagesReordered', { pageNumbersToMove, targetPageNumber});
+        core.movePages(pageNumbersToMove, targetPageNumber).then(() => {
+          fireEvent('bsPagesReordered', { pageNumbersToMove, targetPageNumber});
+        });
       }
     }
     this.setState({ draggingOverPageIndex: null });
